@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.hibernate.annotations.ManyToAny;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,10 +27,13 @@ public class Chat {
 	private String chat_name;
 	private String chat_image;
 	
+	@ManyToMany
+	private Set<User> admins=new HashSet<>();
+	
 	@Column(name="is_group")
 	private boolean isGroup;
 	
-	@Column(name="created_by")
+	@JoinColumn(name="created_by")
 	@ManyToOne		
 	private User createdBy; 
 	
@@ -43,17 +47,34 @@ public class Chat {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Chat(Integer id, String chat_name, String chat_image, boolean isGroup, User createdBy, Set<User> users,
-			List<Message> messages) {
+	 
+
+	public Set<User> getAdmins() {
+		return admins;
+	}
+
+
+
+	public void setAdmins(Set<User> admins) {
+		this.admins = admins;
+	}
+
+
+
+	public Chat(Integer id, String chat_name, String chat_image, Set<User> admins, boolean isGroup, User createdBy,
+			Set<User> users, List<Message> messages) {
 		super();
 		Id = id;
 		this.chat_name = chat_name;
 		this.chat_image = chat_image;
+		this.admins = admins;
 		this.isGroup = isGroup;
 		this.createdBy = createdBy;
 		this.users = users;
 		this.messages = messages;
 	}
+
+
 
 	public Integer getId() {
 		return Id;

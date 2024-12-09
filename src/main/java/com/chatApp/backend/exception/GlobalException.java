@@ -36,6 +36,12 @@ public class GlobalException {
 		ErrorDetail err = new ErrorDetail("Validation Error", req.getDescription(false), LocalDateTime.now());
 		return new ResponseEntity<ErrorDetail>(err, HttpStatus.BAD_REQUEST);
 	}
+	@ExceptionHandler(ChatException.class)
+	public ResponseEntity<ErrorDetail> ChatExceptionHandler(ChatException ce, WebRequest req) {
+		//String error = me.getBindingResult().getFieldError().getDefaultMessage();
+		ErrorDetail err = new ErrorDetail("Chat Error", req.getDescription(false), LocalDateTime.now());
+		return new ResponseEntity<ErrorDetail>(err, HttpStatus.BAD_REQUEST);
+	}
 	
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ResponseEntity<ErrorDetail> NoHandlerFoundExceptionHandler(NoHandlerFoundException e, WebRequest req) {
